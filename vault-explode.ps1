@@ -1,7 +1,7 @@
 param(
-    $role = $(throw "role is a required parameter!"),
-    $path = $(throw "path is a required parameter!"),
-    $vaultHost = $(throw "vaultHost is a required parameter!"),
+    $role = $env:VAULT_APP_NAME,
+    $path = $env:VAULT_SECRET_PATH,
+    $vaultHost = $env:VAULT_HOSTNAME,
     $file = $(throw "file is a required parameter!"),
     $authmethod = "aws"
 )
