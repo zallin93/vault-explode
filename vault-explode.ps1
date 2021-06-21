@@ -16,11 +16,10 @@ $vaultResponse = $( vault read -format=json -address="$($address)" "$($path)" | 
 $data = $vaultResponse.data
 
 # read secrets mapping from config file
-
-# TODO: update this section, copy/pasted from vault-replace.
-# for each secret, replace the key/value pairs in the file
-$data.PSObject.Properties | ForEach-Object {
-    $key = $_.Name
-    $value = $_.Value
-    (Get-Content $file).replace( "{$($key)}", "$($value)" ) | Set-Content $file
+# loop through each line, and set the vault-key value to the desired env var name
+foreach($line in Get-Content -Path $file ) {
+    $lineArray = $line.Split("|")
+    if( $lineArray.Length -eq 2) {
+        [Environment]::SetEnvironmentVariable($lineArray[1], $data.psobject.properties[$lineArray[0]].value , 'Machine')
+    }
 }
