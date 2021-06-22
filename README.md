@@ -68,6 +68,22 @@ apikey|FUN_API_KEY
 ````
 
 
+## Include in your AMI
+
+To include this utility in your AMI, here are examples tasks to include in your Ansible playbook. 
+
+### Windows Ansible task
+````
+- name: Get vault-explode Powershell script
+    win_get_url:
+        url: https://git.gartner.com/users/zallin/repos/vault-explode/raw/vault-explode.ps1?at=refs%2Fheads%2Fdevelop
+        dest: C:\Gartner\vault-explode.ps1
+````
+
+
+### Linux Ansible task
+TODO: Include sample task, or genericise as an Ansible role.
+
 
 ## Usage
 TODO: Refactor this section (*OUT OF DATE*).
