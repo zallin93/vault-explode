@@ -33,26 +33,27 @@ Missing flag values will default to reading from OS environment variables.
 
 ### Parameters and Flags
 
--authmethod 
-Only value currently supported is _aws_. You should not need to provide this.
+#### -authmethod 
+- Only value currently supported is _aws_. 
+- You should not need to provide this.
 
--vaultHost
-Should be the host of the Vault Enterprise server you want to connect to, ie _vault.vaultenterprisesandbox.aws.gartner.com_.
-Will read from VAULT_HOSTNAME OS environment variable, if not provided.
+#### -vaultHost
+- Should be the host of the Vault Enterprise server you want to connect to, ie _vault.vaultenterprisesandbox.aws.gartner.com_.
+- Will read from VAULT_HOSTNAME OS environment variable, if not provided.
 
--role
-Should be the Vault Role you want to authenticate as. 
-Will read from VAULT_APP_NAME OS environment variable, if not provided.
+#### -role
+- Should be the Vault Role you want to authenticate as. 
+- Will read from VAULT_APP_NAME OS environment variable, if not provided.
 
--path
-Should be the secret path your secrets are found on. If you need to replace from multiple 
+#### -path
+- Should be the secret path your secrets are found on. If you need to replace from multiple 
 secret paths, call vault-replace once for each. 
-Will read from VAULT_SECRET_PATH OS environment variable, if not provided.
+- Will read from VAULT_SECRET_PATH OS environment variable, if not provided.
 
--file 
-Should be the path to the `vault-explode.config` file. Absolute or relative to
+#### -file 
+- Should be the path to the `vault-explode.config` file. Absolute or relative to
 current working directory.
-Does not have an OS environment variable fallback.
+- Does not have an OS environment variable fallback.
 
 
 ### explode-config-file
