@@ -90,6 +90,22 @@ You must run as `sudo` or **root** in order to set system environment
 variables.
 
 
+### Usage
+
+````
+./vault-explode.sh -file /path/to/vault-explode.config
+````
+
+````
+./vault-explode -host <vault-hostname> -role <aws-role> -path <secret-path> -file <explode-config-file>
+````
+
+Supports providing an explode-config-file that has a mapping of secret-key to 
+ENV var name.
+
+Missing flag values will default to reading from OS environment variables.
+
+
 ### Parameters and flags
 
 #### -host
