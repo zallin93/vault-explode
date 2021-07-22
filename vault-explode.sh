@@ -28,6 +28,7 @@ file=
 envfile=/etc/profile.d/vault-secrets.sh
 rm $envfile
 touch $envfile
+chmod 0644 $envfile
 
 while [ "$1" != "" ]; do
     case $1 in
@@ -56,30 +57,12 @@ while [ "$1" != "" ]; do
 done
 
 # auth with VE via CLI
-vault auth -method=$authmethod -address=$address role=$role header_value=$header_value
+vault auth -method=$authmethod -address=$address role=$role header_value=$header_value > /dev/null
 
 # read secrets from app path in vault. hold in memory.
 # Remove bottom newline
 # Remove first 3 lines of the table that displays secrets
 vault read -address=$address $secret_path | head -n -1 | tail -n +4 > secrets
-
-
-# FROM WINDOWS IMPL !! 
-# read secrets mapping from config file
-# loop through each line, and set the vault-key value to the desired env var name
-# foreach($line in Get-Content -Path $file ) {
-#     $lineArray = $line.Split("|")
-#     if( $lineArray.Length -eq 2) {
-#         [Environment]::SetEnvironmentVariable($lineArray[1], $data.psobject.properties[$lineArray[0]].value , 'Machine')
-#     }
-# }
-
-## bash read config file line by line. 
-# while IFS="" read -r line || [ -n "$line" ]
-# do
-#   printf '%s\n' "$line"
-# done < $file
-
 
 # for each secret
     # search list of files for matching key value enclosed in {}
@@ -91,22 +74,14 @@ while read line; do
     key="${splitline[0]}"
     value="${splitline[1]}"
 
-    # search $file for line with secret key
+    # search config file, $file, for line with secret key
     configline=`grep -i "$key" $file`
     if [ ! -z "$configline" ]
     then 
-        echo $configline
-
         IFS='|' read -ra ADDR <<< "$configline"
-        echo "${ADDR[0]}"
-        echo "${ADDR[1]}"
-
-        secretkey="${ADDR[0]}"
         envkey="${ADDR[1]}"
 
         echo "export ${envkey}=${value}" >> $envfile
-
-
     fi
     
 done < secrets
